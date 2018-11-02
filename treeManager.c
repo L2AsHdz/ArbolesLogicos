@@ -61,18 +61,33 @@ void nivel(char c){
 
 void encontrarNodo(char c){
     struct nodo *actual = raiz;
-    while (actual != NULL){
-        if (c == actual->info){
-            recorrerNodo(actual);
-            break;
-        }else {
-            if (c>actual->info){
-                actual = actual->derecha;
-                recorrerNodo(actual);
-            }else {
-                actual = actual->izquierda;
-                recorrerNodo(actual);
-            }
+    if (c == actual->info){
+        recorrerNodo(actual);
+    }else {
+        if (c>actual->info){
+            actual = actual->derecha;
+            encontrarNodo2(actual, c);
+            //recorrerNodo(actual);
+        }else if (c<actual->info){
+            actual = actual->izquierda;
+            encontrarNodo2(actual, c);
+            //recorrerNodo(actual);
+        }
+    }
+}
+
+void encontrarNodo2(struct nodo *actual, char c){
+    if (c == actual->info){
+        recorrerNodo(actual);
+    }else {
+        if (c>actual->info){
+            actual = actual->derecha;
+            encontrarNodo2(actual, c);
+            //recorrerNodo(actual);
+        }else if (c<actual->info){
+            actual = actual->izquierda;
+            encontrarNodo2(actual, c);
+            //recorrerNodo(actual);
         }
     }
 }
