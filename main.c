@@ -19,6 +19,8 @@ int main(int argc, char** argv) {
     inOrden(raiz);
     escribirArchivo3();
     postOrden(raiz);
-    borrar(raiz);
+    leerArchivoNivel();
+    crearArchivoNivel();
+    //borrar(raiz);
     return (EXIT_SUCCESS);
 }

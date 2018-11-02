@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include "header.h"
 
+extern struct nodo *raiz;
+
 void leerArchivo(){
     FILE *file = fopen("arbol.txt", "rt");
     
@@ -17,6 +19,22 @@ void leerArchivo(){
     fclose(file);
 }
 
+void leerArchivoNivel(){
+    FILE *file = fopen("nivel.txt", "rt");
+    
+    if (file == NULL){
+        printf("Error en la apertura del archivo");
+        return 1;
+    }
+    
+    char c;
+    while((c=fgetc(file)) != EOF){
+        nivel(c);
+    }
+    
+    fclose(file);
+}
+
 void crearArchivo(){
     FILE *file = fopen("recorrido.txt", "w");
     
@@ -25,6 +43,16 @@ void crearArchivo(){
         return 1;
     }
     fprintf(file, "PreOrden: ");
+    fclose(file);
+}
+
+void crearArchivoNivel(){
+    FILE *file = fopen("nivelS.txt", "w");
+    
+    if (file == NULL){
+        printf("Error en la creacion del archivo");
+        return 1;
+    }
     fclose(file);
 }
 
@@ -58,5 +86,16 @@ void escribirArchivo3(){
         return 1;
     }
     fprintf(file, "\nPostOrden: ");
+    fclose(file);
+}
+
+void escribirArchivoNivel(int i){
+    FILE *file = fopen("nivelS.txt", "at");
+    
+    if (file == NULL){
+        printf("Error en la apertura del archivo");
+        return 1;
+    }
+    fprintf(file,"%i",i);
     fclose(file);
 }

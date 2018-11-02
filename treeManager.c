@@ -3,6 +3,7 @@
 
 struct nodo {
     char info;
+    int nivel;
     struct nodo *izquierda;
     struct nodo *derecha;
 };
@@ -13,21 +14,22 @@ void insertar(char c){
     struct nodo *nuevo;
     nuevo = malloc(sizeof(struct nodo));
     nuevo->info = c;
+    nuevo->nivel = 1;
     nuevo->izquierda = NULL;
     nuevo->derecha = NULL;
     
     if (raiz == NULL) {
         raiz = nuevo;
     }else {
-        struct nodo *anterior, *reco;
+        struct nodo *anterior, *actual;
         anterior = NULL;
-        reco = raiz;
-        while(reco != NULL){
-            anterior = reco;
-            if (c < reco->info) {
-                reco = reco->izquierda;
+        actual = raiz;
+        while(actual != NULL){
+            anterior = actual;
+            if (c < actual->info) {
+                actual = actual->izquierda;
             }else {
-                reco = reco->derecha;
+                actual = actual->derecha;
             }
         }
         
@@ -35,6 +37,26 @@ void insertar(char c){
             anterior->izquierda = nuevo;
         }else {
             anterior->derecha = nuevo;
+        }
+    }
+}
+
+void nivel(char c){
+    struct nodo *reco = raiz;
+    int nivel =1;
+    while (reco != NULL){
+        if (c == reco->info){
+            escribirArchivoNivel(nivel);
+            printf("%i",nivel);
+            break;
+        }else {
+            if (c>reco->info){
+                reco = reco->derecha;
+                nivel++;
+            }else {
+                reco = reco->izquierda;
+                nivel++;
+            }
         }
     }
 }
@@ -66,7 +88,7 @@ void postOrden(struct nodo *reco){
     }
 }
 
-void borrar(struct nodo *reco)
+/*void borrar(struct nodo *reco)
 {
     if (reco != NULL)
     {
@@ -74,4 +96,4 @@ void borrar(struct nodo *reco)
         borrar(reco->derecha);
         free(reco);
     }
-}
+}*/
