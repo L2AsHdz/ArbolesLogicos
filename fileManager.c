@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include "header.h"
 
-extern struct nodo *raiz;
-
 void leerArchivo(){
     FILE *file = fopen("arbol.txt", "rt");
     
@@ -35,6 +33,22 @@ void leerArchivoNivel(){
     fclose(file);
 }
 
+void leerArchivoPeso(){
+    FILE *file = fopen("pesos.txt", "rt");
+    
+    if (file == NULL){
+        printf("Error en la apertura del archivo");
+        return 1;
+    }
+    
+    char c;
+    while((c=fgetc(file)) != EOF){
+        encontrarNodo(c);
+    }
+    
+    fclose(file);
+}
+
 void crearArchivo(){
     FILE *file = fopen("recorrido.txt", "w");
     
@@ -48,6 +62,16 @@ void crearArchivo(){
 
 void crearArchivoNivel(){
     FILE *file = fopen("nivelS.txt", "w");
+    
+    if (file == NULL){
+        printf("Error en la creacion del archivo");
+        return 1;
+    }
+    fclose(file);
+}
+
+void crearArchivoPeso(){
+    FILE *file = fopen("pesosS.txt", "w");
     
     if (file == NULL){
         printf("Error en la creacion del archivo");
@@ -89,13 +113,24 @@ void escribirArchivo3(){
     fclose(file);
 }
 
-void escribirArchivoNivel(int i){
+void escribirArchivoNivel(int in){
     FILE *file = fopen("nivelS.txt", "at");
     
     if (file == NULL){
         printf("Error en la apertura del archivo");
         return 1;
     }
-    fprintf(file,"%i",i);
+    fprintf(file, "%i ", in);
+    fclose(file);
+}
+
+void escribirArchivoPeso(int peso1, int peso2){
+    FILE *file = fopen("pesosS.txt", "at");
+    
+    if (file == NULL){
+        printf("Error en la apertura del archivo");
+        return 1;
+    }
+    fprintf(file, "%i %i ", peso1, peso2);
     fclose(file);
 }

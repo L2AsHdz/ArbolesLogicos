@@ -15,3 +15,15 @@ void leerArchivoNivel();
 void nivel(char c);
 
 void crearArchivoNivel();
+
+void escribirArchivoNivel(int in);
+
+void leerArchivoPeso();
+
+void encontrarNodo(char c);
+
+void crearArchivoPeso();
+
+void escribirArchivoPeso(int peso1, int peso2);
+
+

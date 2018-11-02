@@ -3,7 +3,6 @@
 
 struct nodo {
     char info;
-    int nivel;
     struct nodo *izquierda;
     struct nodo *derecha;
 };
@@ -14,7 +13,6 @@ void insertar(char c){
     struct nodo *nuevo;
     nuevo = malloc(sizeof(struct nodo));
     nuevo->info = c;
-    nuevo->nivel = 1;
     nuevo->izquierda = NULL;
     nuevo->derecha = NULL;
     
@@ -43,7 +41,7 @@ void insertar(char c){
 
 void nivel(char c){
     struct nodo *reco = raiz;
-    int nivel =1;
+    int nivel = 1;
     while (reco != NULL){
         if (c == reco->info){
             escribirArchivoNivel(nivel);
@@ -51,14 +49,49 @@ void nivel(char c){
             break;
         }else {
             if (c>reco->info){
+                nivel++;
                 reco = reco->derecha;
-                nivel++;
             }else {
-                reco = reco->izquierda;
                 nivel++;
+                reco = reco->izquierda;
             }
         }
     }
+}
+
+void encontrarNodo(char c){
+    struct nodo *actual = raiz;
+    while (actual != NULL){
+        if (c == actual->info){
+            recorrerNodo(actual);
+            break;
+        }else {
+            if (c>actual->info){
+                actual = actual->derecha;
+                recorrerNodo(actual);
+            }else {
+                actual = actual->izquierda;
+                recorrerNodo(actual);
+            }
+        }
+    }
+}
+
+void recorrerNodo(struct nodo *actual){
+    int pesoIzq = 0;
+    int pesoDer = 0;
+    struct nodo *temp = actual;
+    while (actual != NULL) {
+        actual = actual->izquierda;
+        if (actual != NULL) pesoIzq++;
+    }
+    actual = temp;
+    while (actual != NULL) {
+        actual = actual->derecha;
+        if (actual != NULL) pesoDer++;
+    }
+    escribirArchivoPeso(pesoIzq, pesoDer);
+    printf("izq: %i - der: %i",pesoIzq,pesoDer);
 }
 
 void preOrden(struct nodo *reco){
