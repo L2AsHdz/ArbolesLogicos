@@ -1,0 +1,3 @@
+PreOrden: fdacp
+InOrden: acdfp
+PostOrden: cadpf

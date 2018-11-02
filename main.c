@@ -8,8 +8,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "header.h"
+
+extern struct nodo *raiz;
+
 int main(int argc, char** argv) {
     leerArchivo();
+    crearArchivo();
+    preOrden(raiz);
+    escribirArchivo2();
+    inOrden(raiz);
+    escribirArchivo3();
+    postOrden(raiz);
+    borrar(raiz);
     return (EXIT_SUCCESS);
 }
-
