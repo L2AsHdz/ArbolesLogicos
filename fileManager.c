@@ -120,7 +120,7 @@ void escribirArchivoNivel(int in){
         printf("Error en la apertura del archivo");
         return 1;
     }
-    fprintf(file, "%i ", in);
+    fprintf(file, "%i,", in);
     fclose(file);
 }
 

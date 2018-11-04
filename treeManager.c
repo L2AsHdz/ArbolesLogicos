@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "header.h"
+
 struct nodo {
     char info;
     struct nodo *izquierda;
@@ -61,52 +63,40 @@ void nivel(char c){
 
 void encontrarNodo(char c){
     struct nodo *actual = raiz;
-    if (c == actual->info){
-        recorrerNodo(actual);
-    }else {
-        if (c>actual->info){
-            actual = actual->derecha;
-            encontrarNodo2(actual, c);
-            //recorrerNodo(actual);
-        }else if (c<actual->info){
-            actual = actual->izquierda;
-            encontrarNodo2(actual, c);
-            //recorrerNodo(actual);
+    while (actual != NULL) {
+        if (c == actual->info) {
+            int pesoIzq = recorrerIzquierda(actual->izquierda, 0);
+            int pesoDer = recorrerDerecha(actual->derecha, 0);
+            printf("se encontro el nodo %c", actual->info);
+            printf(" %i,%i ", pesoIzq, pesoDer);
+            escribirArchivoPeso(pesoIzq,pesoDer);
+            break;
+        }else {
+            if (c > actual->info) {
+                actual = actual->derecha;
+            }else {
+                actual = actual->izquierda;
+            }
         }
     }
 }
 
-void encontrarNodo2(struct nodo *actual, char c){
-    if (c == actual->info){
-        recorrerNodo(actual);
-    }else {
-        if (c>actual->info){
-            actual = actual->derecha;
-            encontrarNodo2(actual, c);
-            //recorrerNodo(actual);
-        }else if (c<actual->info){
-            actual = actual->izquierda;
-            encontrarNodo2(actual, c);
-            //recorrerNodo(actual);
-        }
+int recorrerIzquierda(struct nodo *actual, int pesoI){
+    if (actual != NULL) {
+        pesoI++;
+        pesoI = recorrerIzquierda(actual->izquierda, pesoI);
+        pesoI = recorrerIzquierda(actual->derecha, pesoI);
     }
+    return pesoI;
 }
 
-void recorrerNodo(struct nodo *actual){
-    int pesoIzq = 0;
-    int pesoDer = 0;
-    struct nodo *temp = actual;
-    while (actual != NULL) {
-        actual = actual->izquierda;
-        if (actual != NULL) pesoIzq++;
+int recorrerDerecha(struct nodo *actual, int pesoD){
+    if (actual != NULL) {
+        pesoD++;
+        pesoD = recorrerDerecha(actual->izquierda, pesoD);
+        pesoD = recorrerDerecha(actual->derecha, pesoD);
     }
-    actual = temp;
-    while (actual != NULL) {
-        actual = actual->derecha;
-        if (actual != NULL) pesoDer++;
-    }
-    escribirArchivoPeso(pesoIzq, pesoDer);
-    printf("izq: %i - der: %i",pesoIzq,pesoDer);
+    return pesoD;
 }
 
 void preOrden(struct nodo *reco){
@@ -115,7 +105,7 @@ void preOrden(struct nodo *reco){
         printf("%c", reco->info);
         preOrden(reco->izquierda);
         preOrden(reco->derecha);
-    }
+    } 
 }
 
 void inOrden(struct nodo *reco){
