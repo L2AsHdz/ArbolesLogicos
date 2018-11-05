@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include "header.h"
 
-void leerArchivo(){
-    FILE *file = fopen("arbol.txt", "rt");
+void leerArchivo(char nameFile[], int typeFile){
+    FILE *file = fopen(nameFile, "rt");
     
     if (file == NULL){
         printf("Error en la apertura del archivo");
@@ -11,104 +11,41 @@ void leerArchivo(){
     
     char c;
     while((c=fgetc(file)) != EOF){
-        insertar(c);
+        switch(typeFile){
+            case 1:
+                insertar(c);
+                break;
+                
+            case 2:
+                nivel(c);
+                break;
+            
+            case 3:
+                peso(c);
+                break;
+                
+            case 4:
+                eliminar(c);
+                break;
+        }
     }
     
     fclose(file);
 }
 
-void leerArchivoNivel(){
-    FILE *file = fopen("nivel.txt", "rt");
-    
-    if (file == NULL){
-        printf("Error en la apertura del archivo");
-        return 1;
-    }
-    
-    char c;
-    while((c=fgetc(file)) != EOF){
-        nivel(c);
-    }
-    
-    fclose(file);
-}
-
-void leerArchivoPeso(){
-    FILE *file = fopen("pesos.txt", "rt");
-    
-    if (file == NULL){
-        printf("Error en la apertura del archivo");
-        return 1;
-    }
-    
-    char c;
-    while((c=fgetc(file)) != EOF){
-        peso(c);
-    }
-    
-    fclose(file);
-}
-
-void leerArchivoEliminar(){
-    FILE *file = fopen("eliminar.txt", "rt");
-    
-    if (file == NULL){
-        printf("Error en la apertura del archivo");
-        return 1;
-    }
-    
-    char c;
-    while((c=fgetc(file)) != EOF){
-        eliminar(c);
-    }
-    
-    fclose(file);
-}
-
-void crearArchivo(){
-    FILE *file = fopen("recorrido.txt", "w");
+void crearArchivo(char nameFile[], char initialText[]){
+    FILE *file = fopen(nameFile, "w");
     
     if (file == NULL){
         printf("Error en la creacion del archivo");
         return 1;
     }
-    fprintf(file, "PreOrden: ");
+    fprintf(file, initialText);
     fclose(file);
 }
 
-void crearArchivoNivel(){
-    FILE *file = fopen("nivelS.txt", "w");
-    
-    if (file == NULL){
-        printf("Error en la creacion del archivo");
-        return 1;
-    }
-    fclose(file);
-}
-
-void crearArchivoPeso(){
-    FILE *file = fopen("pesosS.txt", "w");
-    
-    if (file == NULL){
-        printf("Error en la creacion del archivo");
-        return 1;
-    }
-    fclose(file);
-}
-
-void crearArchivoEliminar(){
-    FILE *file = fopen("recorridoE.txt", "w");
-    
-    if (file == NULL){
-        printf("Error en la creacion del archivo");
-        return 1;
-    }
-    fprintf(file, "PreOrden: ");
-    fclose(file);
-}
-
-void escribirArchivo(char c){
-    FILE *file = fopen("recorrido.txt", "at");
+void escribirArchivo(char c, char nameFile[]){
+    FILE *file = fopen(nameFile, "at");
     
     if (file == NULL){
         printf("Error en la apertura del archivo");
@@ -118,25 +55,14 @@ void escribirArchivo(char c){
     fclose(file);
 }
 
-void escribirArchivo2(){
-    FILE *file = fopen("recorrido.txt", "at");
+void escribirArchivo2(char nameFile[], char text[]){
+    FILE *file = fopen(nameFile, "at");
     
     if (file == NULL){
         printf("Error en la apertura del archivo");
         return 1;
     }
-    fprintf(file, "\nInOrden: ");
-    fclose(file);
-}
-
-void escribirArchivo3(){
-    FILE *file = fopen("recorrido.txt", "at");
-    
-    if (file == NULL){
-        printf("Error en la apertura del archivo");
-        return 1;
-    }
-    fprintf(file, "\nPostOrden: ");
+    fprintf(file, text);
     fclose(file);
 }
 
@@ -159,38 +85,5 @@ void escribirArchivoPeso(char c, int peso1, int peso2){
         return 1;
     }
     fprintf(file,"Para %c: Izquierdo %i - Derecho %i \n", c, peso1, peso2);
-    fclose(file);
-}
-
-void escribirArchivoE(char c){
-    FILE *file = fopen("recorridoE.txt", "at");
-    
-    if (file == NULL){
-        printf("Error en la apertura del archivo");
-        return 1;
-    }
-    fputc(c,file);
-    fclose(file);
-}
-
-void escribirArchivo2E(){
-    FILE *file = fopen("recorridoE.txt", "at");
-    
-    if (file == NULL){
-        printf("Error en la apertura del archivo");
-        return 1;
-    }
-    fprintf(file, "\nInOrden: ");
-    fclose(file);
-}
-
-void escribirArchivo3E(){
-    FILE *file = fopen("recorridoE.txt", "at");
-    
-    if (file == NULL){
-        printf("Error en la apertura del archivo");
-        return 1;
-    }
-    fprintf(file, "\nPostOrden: ");
     fclose(file);
 }

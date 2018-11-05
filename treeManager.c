@@ -96,7 +96,7 @@ void eliminarNodo(struct nodo *actual){
     struct nodo *menor;
     if (actual->derecha && actual->izquierda) {
         if(actual->derecha){
-        menor = encontrarMinimo(actual->derecha);
+            menor = encontrarMinimo(actual->derecha);
         }else {
             menor = encontrarMinimo2(actual->izquierda);
         }
@@ -115,20 +115,19 @@ void eliminarNodo(struct nodo *actual){
 }
 
 void nivel(char c){
-    struct nodo *reco = raiz;
+    struct nodo *actual = raiz;
     int nivel = 1;
-    while (reco != NULL){
-        if (c == reco->dato){
+    while (actual != NULL){
+        if (c == actual->dato){
             escribirArchivoNivel(nivel);
-            printf("\nEl nivel de %c es %i", reco->dato, nivel);
             break;
         }else {
-            if (c>reco->dato){
+            if (c > actual->dato){
                 nivel++;
-                reco = reco->derecha;
+                actual = actual->derecha;
             }else {
                 nivel++;
-                reco = reco->izquierda;
+                actual = actual->izquierda;
             }
         }
     }
@@ -140,8 +139,6 @@ void peso(char c){
         if (c == actual->dato) {
             int pesoIzq = recorrerIzquierda(actual->izquierda, 0);
             int pesoDer = recorrerDerecha(actual->derecha, 0);
-            printf("\nse encontro el nodo %c", actual->dato);
-            printf(" %i,%i", pesoIzq, pesoDer);
             escribirArchivoPeso(actual->dato,pesoIzq,pesoDer);
             break;
         }else {
@@ -172,84 +169,26 @@ int recorrerDerecha(struct nodo *actual, int pesoD){
     return pesoD;
 }
 
-int isHoja(struct nodo *actual){
-    int boolean = 0;
-    if (recorrerIzquierda(actual,0) == 0 && recorrerDerecha(actual,0) == 0) {
-        boolean = 1;
-    }
-    return boolean;
-}
-
-int isNodo1Hijo(struct nodo *actual){
-    int boolean = 0;
-    if (recorrerIzquierda(actual,0) >= 1 && recorrerDerecha(actual,0) == 0) {
-        boolean = 1;
-    }else if (recorrerIzquierda(actual,0) == 0 && recorrerDerecha(actual,0) >= 1) {
-        boolean = 2;
-    }
-    return boolean;
-}
-
-void preOrden(struct nodo *reco){
+void preOrden(struct nodo *reco, char text[]){
     if (reco != NULL) {
-        escribirArchivo(reco->dato);
-        printf("%c", reco->dato);
-        preOrden(reco->izquierda);
-        preOrden(reco->derecha);
+        escribirArchivo(reco->dato, text);
+        preOrden(reco->izquierda, text);
+        preOrden(reco->derecha, text);
     } 
 }
 
-void inOrden(struct nodo *reco){
+void inOrden(struct nodo *reco, char text[]){
     if (reco != NULL) {
-        inOrden(reco->izquierda);
-        escribirArchivo(reco->dato);
-        printf("%c", reco->dato);
-        inOrden(reco->derecha);
+        inOrden(reco->izquierda, text);
+        escribirArchivo(reco->dato, text);
+        inOrden(reco->derecha, text);
     }
 }
 
-void postOrden(struct nodo *reco){
+void postOrden(struct nodo *reco, char text[]){
     if (reco != NULL) {
-        postOrden(reco->izquierda);
-        postOrden(reco->derecha);
-        escribirArchivo(reco->dato);
-        printf("%c", reco->dato);
-    }
-}
-
-void preOrdenE(struct nodo *reco){
-    if (reco != NULL) {
-        escribirArchivoE(reco->dato);
-        printf("%c", reco->dato);
-        preOrdenE(reco->izquierda);
-        preOrdenE(reco->derecha);
-    } 
-}
-
-void inOrdenE(struct nodo *reco){
-    if (reco != NULL) {
-        inOrdenE(reco->izquierda);
-        escribirArchivoE(reco->dato);
-        printf("%c", reco->dato);
-        inOrdenE(reco->derecha);
-    }
-}
-
-void postOrdenE(struct nodo *reco){
-    if (reco != NULL) {
-        postOrdenE(reco->izquierda);
-        postOrdenE(reco->derecha);
-        escribirArchivoE(reco->dato);
-        printf("%c", reco->dato);
-    }
-}
-
-void imprimirPadres(struct nodo *actual){
-    if (actual != NULL) {
-        if (actual->padre != NULL) {
-            printf("\nEl padre de %c es: %c", actual->dato, actual->padre->dato);
-        }
-        imprimirPadres(actual->izquierda);
-        imprimirPadres(actual->derecha);
+        postOrden(reco->izquierda, text);
+        postOrden(reco->derecha, text);
+        escribirArchivo(reco->dato, text);
     }
 }
