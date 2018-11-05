@@ -20,8 +20,18 @@ void escribirArchivoNivel(int in);
 
 void leerArchivoPeso();
 
-void encontrarNodo(char c);
+void peso(char c);
 
 void crearArchivoPeso();
 
 void escribirArchivoPeso(char c, int peso1, int peso2);
+
+void leerArchivoEliminar();
+
+void crearArchivoEliminar();
+
+void escribirArchivoE(char c);
+
+void escribirArchivo2E();
+
+void escribirArchivo3E();

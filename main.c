@@ -19,6 +19,13 @@ int main(int argc, char** argv) {
     inOrden(raiz);
     escribirArchivo3();
     postOrden(raiz);
+    leerArchivoEliminar();
+    crearArchivoEliminar();
+    preOrdenE(raiz);
+    escribirArchivo2E();
+    inOrdenE(raiz);
+    escribirArchivo3E();
+    postOrdenE(raiz);
     crearArchivoNivel();
     leerArchivoNivel();
     crearArchivoPeso();

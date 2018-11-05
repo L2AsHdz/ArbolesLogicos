@@ -43,7 +43,23 @@ void leerArchivoPeso(){
     
     char c;
     while((c=fgetc(file)) != EOF){
-        encontrarNodo(c);
+        peso(c);
+    }
+    
+    fclose(file);
+}
+
+void leerArchivoEliminar(){
+    FILE *file = fopen("eliminar.txt", "rt");
+    
+    if (file == NULL){
+        printf("Error en la apertura del archivo");
+        return 1;
+    }
+    
+    char c;
+    while((c=fgetc(file)) != EOF){
+        eliminar(c);
     }
     
     fclose(file);
@@ -77,6 +93,17 @@ void crearArchivoPeso(){
         printf("Error en la creacion del archivo");
         return 1;
     }
+    fclose(file);
+}
+
+void crearArchivoEliminar(){
+    FILE *file = fopen("recorridoE.txt", "w");
+    
+    if (file == NULL){
+        printf("Error en la creacion del archivo");
+        return 1;
+    }
+    fprintf(file, "PreOrden: ");
     fclose(file);
 }
 
@@ -124,17 +151,6 @@ void escribirArchivoNivel(int in){
     fclose(file);
 }
 
-void escribirArchivoPeso0(char c){
-    FILE *file = fopen("pesosS.txt", "at");
-    
-    if (file == NULL){
-        printf("Error en la apertura del archivo");
-        return 1;
-    }
-    fprintf(file, "Para %c: ", c);
-    fclose(file);
-}
-
 void escribirArchivoPeso(char c, int peso1, int peso2){
     FILE *file = fopen("pesosS.txt", "at");
     
@@ -143,5 +159,38 @@ void escribirArchivoPeso(char c, int peso1, int peso2){
         return 1;
     }
     fprintf(file,"Para %c: Izquierdo %i - Derecho %i \n", c, peso1, peso2);
+    fclose(file);
+}
+
+void escribirArchivoE(char c){
+    FILE *file = fopen("recorridoE.txt", "at");
+    
+    if (file == NULL){
+        printf("Error en la apertura del archivo");
+        return 1;
+    }
+    fputc(c,file);
+    fclose(file);
+}
+
+void escribirArchivo2E(){
+    FILE *file = fopen("recorridoE.txt", "at");
+    
+    if (file == NULL){
+        printf("Error en la apertura del archivo");
+        return 1;
+    }
+    fprintf(file, "\nInOrden: ");
+    fclose(file);
+}
+
+void escribirArchivo3E(){
+    FILE *file = fopen("recorridoE.txt", "at");
+    
+    if (file == NULL){
+        printf("Error en la apertura del archivo");
+        return 1;
+    }
+    fprintf(file, "\nPostOrden: ");
     fclose(file);
 }
