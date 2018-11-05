@@ -1,10 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "header.h"
-
 struct nodo {
     char info;
+    struct nodo *padre;
     struct nodo *izquierda;
     struct nodo *derecha;
 };
@@ -15,6 +14,7 @@ void insertar(char c){
     struct nodo *nuevo;
     nuevo = malloc(sizeof(struct nodo));
     nuevo->info = c;
+    nuevo->padre = NULL;
     nuevo->izquierda = NULL;
     nuevo->derecha = NULL;
     
@@ -34,8 +34,10 @@ void insertar(char c){
         }
         
         if (c < anterior->info) {
+            nuevo->padre = anterior;
             anterior->izquierda = nuevo;
         }else {
+            nuevo->padre = anterior;
             anterior->derecha = nuevo;
         }
     }
@@ -47,7 +49,7 @@ void nivel(char c){
     while (reco != NULL){
         if (c == reco->info){
             escribirArchivoNivel(nivel);
-            printf("%i",nivel);
+            printf("\nEl nivel de %c es %i", reco->info, nivel);
             break;
         }else {
             if (c>reco->info){
@@ -67,9 +69,9 @@ void encontrarNodo(char c){
         if (c == actual->info) {
             int pesoIzq = recorrerIzquierda(actual->izquierda, 0);
             int pesoDer = recorrerDerecha(actual->derecha, 0);
-            printf("se encontro el nodo %c", actual->info);
-            printf(" %i,%i ", pesoIzq, pesoDer);
-            escribirArchivoPeso(pesoIzq,pesoDer);
+            printf("\nse encontro el nodo %c", actual->info);
+            printf(" %i,%i", pesoIzq, pesoDer);
+            escribirArchivoPeso(actual->info,pesoIzq,pesoDer);
             break;
         }else {
             if (c > actual->info) {
@@ -99,6 +101,24 @@ int recorrerDerecha(struct nodo *actual, int pesoD){
     return pesoD;
 }
 
+int isHoja(struct nodo *actual){
+    int boolean = 0;
+    if (recorrerIzquierda(actual,0) == 0 && recorrerDerecha(actual,0) == 0) {
+        boolean = 1;
+    }
+    return boolean;
+}
+
+int isNodo1Hijo(struct nodo *actual){
+    int boolean = 0;
+    if (recorrerIzquierda(actual,0) >= 1 && recorrerDerecha(actual,0) == 0) {
+        boolean = 1;
+    }else if (recorrerIzquierda(actual,0) == 0 && recorrerDerecha(actual,0) >= 1) {
+        boolean = 2;
+    }
+    return boolean;
+}
+
 void preOrden(struct nodo *reco){
     if (reco != NULL) {
         escribirArchivo(reco->info);
@@ -126,12 +146,12 @@ void postOrden(struct nodo *reco){
     }
 }
 
-/*void borrar(struct nodo *reco)
-{
-    if (reco != NULL)
-    {
-        borrar(reco->izquierda);
-        borrar(reco->derecha);
-        free(reco);
+void imprimirPadres(struct nodo *actual){
+    if (actual != NULL) {
+        if (actual->padre != NULL) {
+            printf("\nEl padre de %c es: %c", actual->info, actual->padre->info);
+        }
+        imprimirPadres(actual->izquierda);
+        imprimirPadres(actual->derecha);
     }
-}*/
+}

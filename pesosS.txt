@@ -1,5 +1,5 @@
-1 1 
-0 3 
-4 4 
-0 3 
-0 2 
+Para c: Izquierdo 1 - Derecho 1 
+Para a: Izquierdo 0 - Derecho 3 
+Para m: Izquierdo 4 - Derecho 4 
+Para o: Izquierdo 0 - Derecho 3 
+Para x: Izquierdo 0 - Derecho 2 

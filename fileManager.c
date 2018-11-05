@@ -135,13 +135,13 @@ void escribirArchivoPeso0(char c){
     fclose(file);
 }
 
-void escribirArchivoPeso(int peso1, int peso2){
+void escribirArchivoPeso(char c, int peso1, int peso2){
     FILE *file = fopen("pesosS.txt", "at");
     
     if (file == NULL){
         printf("Error en la apertura del archivo");
         return 1;
     }
-    fprintf(file, "%i %i \n", peso1, peso2);
+    fprintf(file,"Para %c: Izquierdo %i - Derecho %i \n", c, peso1, peso2);
     fclose(file);
 }

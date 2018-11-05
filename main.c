@@ -23,7 +23,6 @@ int main(int argc, char** argv) {
     leerArchivoNivel();
     crearArchivoPeso();
     leerArchivoPeso();
-    
-    //borrar(raiz);
+    imprimirPadres(raiz);
     return (EXIT_SUCCESS);
 }

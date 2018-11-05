@@ -24,6 +24,4 @@ void encontrarNodo(char c);
 
 void crearArchivoPeso();
 
-void escribirArchivoPeso(int peso1, int peso2);
-
-
+void escribirArchivoPeso(char c, int peso1, int peso2);
